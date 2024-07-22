@@ -10,3 +10,9 @@ class PhysicsEntity:
 
     def update(self, movement = (0, 0)):
         frame_movement = (movement[0] + self.velocity[0], movement[1] + self.velocity[1])  #enables multiple layered controls that factor into movement, input and obj velocity in this case
+
+        self.pos[0] += frame_movement[0] 
+        self.pos[1] += frame_movement[1]
+
+    def render(self, surf):
+        surf.blit(self.game.assets['player', self.pos])
