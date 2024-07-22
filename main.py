@@ -25,6 +25,7 @@ class Game:
             self.screen.fill((14, 219, 248))  # reset screen with background color (R, B, G)
 
             self.player.update((self.movement[1] - self.movement[0], 0))
+            self.player.render(self.screen)
             
             for event in pygame.event.get():  # handles all kinds of events, including key press, mouse movement etc.
                 if event.type == pygame.QUIT:
