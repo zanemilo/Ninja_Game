@@ -1,7 +1,7 @@
 import pygame
 
 class PhysicsEntity:
-    def __init__(self, game, e_type, pos, size, velocity):
+    def __init__(self, game, e_type, pos, size):
         self.game = game
         self.e_type = e_type
         self.pos = list(pos)  # any iterable becomes a list
@@ -15,4 +15,4 @@ class PhysicsEntity:
         self.pos[1] += frame_movement[1]
 
     def render(self, surf):
-        surf.blit(self.game.assets['player', self.pos])
+        surf.blit(self.game.assets['player'], self.pos)

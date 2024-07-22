@@ -3,6 +3,7 @@ import sys
 import pygame
 
 from scripts.entities import PhysicsEntity
+from scripts.utils import load_image
 
 class Game:
     def __init__(self) :
@@ -14,6 +15,10 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.movement = [False, False]
+
+        self.assets = {
+            'player': load_image('entities/player.png')
+        }
 
         self.collision_area = pygame.Rect(50, 50, 300, 50) # create area to test collision with
 
