@@ -13,6 +13,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.img = pygame.image.load('data/images/clouds/cloud_1.png')  # Load a img obj, this is a cloud
+        self.img.set_colorkey((0, 0, 0))  # color key specifies: one specific color should be transparent, in this case black
         self.img_pos = [160, 260]
         self.movement = [False, False]
 
