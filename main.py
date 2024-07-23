@@ -4,6 +4,7 @@ import pygame
 
 from scripts.entities import PhysicsEntity
 from scripts.utils import load_image, load_images
+from scripts.tilemap import Tilemap
 
 class Game:
     """ Game obj required for encapsulating game functions, attributes and variables. Thereby presenting cleaner code, following better practices, simplifying troubleshooting and more."""
@@ -26,19 +27,21 @@ class Game:
             'player': load_image('entities/player.png')
         }
 
-        print(self.assets)
-
-        self.collision_area = pygame.Rect(50, 50, 300, 50) # create area to test collision with
+        print(self.assets )
 
         self.player = PhysicsEntity(self, e_type='player', pos=(50, 50), size=(8, 15))  # instantiate player obj for use in game/run function in main.
+
+        self.tilemap = Tilemap(tile_size=16)  # instantiate Tilemap with default size 16
 
 
     def run(self):
         while True:
             self.display.fill((14, 219, 248))  # each call, set screen with background color (R, B, G)
 
+            self.tilemap.render(self.display)  # each call, render tile map
+
             self.player.update((self.movement[1] - self.movement[0], 0))  # each call, update  player movement bools, accounting for if both (Left and Right keys) are being pressed adding to 0 (False), and for now we are not allowing y movement.
-            self.player.render(self.display)  #
+            self.player.render(self.display)  # each call, render player
             
             for event in pygame.event.get():  # handles all kinds of events, including key press, mouse movement etc.
                 if event.type == pygame.QUIT:
