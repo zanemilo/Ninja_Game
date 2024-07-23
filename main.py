@@ -12,6 +12,7 @@ class Game:
 
         pygame.display.set_caption("Ninja Game")  # Name of game, appears top lef tof window
         self.screen = pygame.display.set_mode((640, 480))  # screen obj. Resolution of window
+        self.display = pygame.Surface((320, 240))  # the actual display that you render onto, Surface is an empty image, all black by default
 
         self.clock = pygame.time.Clock()
 
@@ -28,10 +29,10 @@ class Game:
 
     def run(self):
         while True:
-            self.screen.fill((14, 219, 248))  # each call, set screen with background color (R, B, G)
+            self.display.fill((14, 219, 248))  # each call, set screen with background color (R, B, G)
 
             self.player.update((self.movement[1] - self.movement[0], 0))  # each call, update  player movement bools, accounting for if both (Left and Right keys) are being pressed adding to 0 (False), and for now we are not allowing y movement.
-            self.player.render(self.screen)  #
+            self.player.render(self.display)  #
             
             for event in pygame.event.get():  # handles all kinds of events, including key press, mouse movement etc.
                 if event.type == pygame.QUIT:
@@ -48,6 +49,7 @@ class Game:
                     if event.key == pygame.K_RIGHT:
                         self.movement[1] = False
 
+            self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))  # Render display onto screen (window), transform the size of display to screen (get its size)
             pygame.display.update()
             self.clock.tick(60)
 
