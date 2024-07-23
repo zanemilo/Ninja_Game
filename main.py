@@ -31,7 +31,7 @@ class Game:
 
         self.player = PhysicsEntity(self, e_type='player', pos=(50, 50), size=(8, 15))  # instantiate player obj for use in game/run function in main.
 
-        self.tilemap = Tilemap(tile_size=16)  # instantiate Tilemap with default size 16
+        self.tilemap = Tilemap(self, tile_size=16)  # self to pass in game reference to then instantiate Tilemap with default size 16
 
 
     def run(self):
