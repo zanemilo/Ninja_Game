@@ -3,7 +3,7 @@ import sys
 import pygame
 
 from scripts.entities import PhysicsEntity
-from scripts.utils import load_image
+from scripts.utils import load_image, load_images
 
 class Game:
     """ Game obj required for encapsulating game functions, attributes and variables. Thereby presenting cleaner code, following better practices, simplifying troubleshooting and more."""
@@ -19,8 +19,14 @@ class Game:
         self.movement = [False, False]  # Boolean representation of if Left, Right keys respectively are being pressed/held or not.
 
         self.assets = {
+            'decor': load_images('tiles/decor'),
+            'grass': load_images('tiles/grass'),
+            'large_decor': load_images('tiles/large_decor'),
+            'stone': load_images('tiles/stone') ,
             'player': load_image('entities/player.png')
         }
+
+        print(self.assets)
 
         self.collision_area = pygame.Rect(50, 50, 300, 50) # create area to test collision with
 
