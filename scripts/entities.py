@@ -4,7 +4,7 @@ class PhysicsEntity:
     def __init__(self, game, e_type, pos, size):
         self.game = game
         self.e_type = e_type
-        self.pos = list(pos)  # any iterable becomes a list
+        self.pos = list(pos)  # any iterable becomes a list, for example passing a tuple -> list
         self.size = size
         self.velocity = [0, 0]
 
