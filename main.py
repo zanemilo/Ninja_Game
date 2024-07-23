@@ -6,15 +6,16 @@ from scripts.entities import PhysicsEntity
 from scripts.utils import load_image
 
 class Game:
-    def __init__(self) :
+    """ Game obj required for encapsulating game functions, attributes and variables. Thereby presenting cleaner code, following better practices, simplifying troubleshooting and more."""
+    def __init__(self) : 
         pygame.init()
 
         pygame.display.set_caption("Ninja Game")  # Name of game, appears top lef tof window
-        self.screen = pygame.display.set_mode((640, 480)) # screen obj. Resolution of window
+        self.screen = pygame.display.set_mode((640, 480))  # screen obj. Resolution of window
 
         self.clock = pygame.time.Clock()
 
-        self.movement = [False, False]
+        self.movement = [False, False]  # Boolean representation of if Left, Right keys respectively are being pressed/held or not.
 
         self.assets = {
             'player': load_image('entities/player.png')
