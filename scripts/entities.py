@@ -14,6 +14,8 @@ class PhysicsEntity:
 
         self.pos[0] += frame_movement[0] 
         self.pos[1] += frame_movement[1]
+        
+        self.velocity[1] = min(5, self.velocity[1] + 0.1)  # nice way of doing take the smaller number to make terminal velocity <= 5.
 
     def render(self, surf):
         """Given surf param, blit the path to the 'player' img at self.pos on the surf param"""

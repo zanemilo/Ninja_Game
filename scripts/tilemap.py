@@ -1,3 +1,5 @@
+NEIGHBOR_OFFSETs = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (0, 0), (-1, 1), (0, 1), (1, 1)] # All of the offsets to calc/help look up 9 tiles around the player for physics
+
 class Tilemap:
     def __init__(self, game, tile_size=16):
         self.game = game
@@ -20,4 +22,4 @@ class Tilemap:
             # render the tile onto param surf, position of tile is based on dict position in tilemap then multiplies them by tile_size attribute
             surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos'][0] * self.tile_size, tile['pos'][1] * self.tile_size ))
 
-        
+    
