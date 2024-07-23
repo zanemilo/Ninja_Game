@@ -4,6 +4,9 @@ class Tilemap:
         self.tilemap = {}  # Every tile is on a square grid
         self.offgrid_tiles = []  # Tiles for off grid, all over the place
 
+        # Concatonates location based on for loop i with fixed position of 10 as denoted by ';10', 
+        # this location contains a dict that holds informaiton about the tile such as type, variant, and position.
         for i in range(10):
-            self.tilemap[str(3 + i) + ';10'] = {'type': 'grass', 'variant': 1, 'pos': (3 + i, 10)}
+            self.tilemap[str(3 + i) + ';10'] = {'type': 'grass', 'variant': 1, 'pos': (3 + i, 10)}  
+            
         
