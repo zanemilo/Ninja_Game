@@ -13,6 +13,11 @@ class Tilemap:
             self.tilemap[str(3 + i) + ';10'] = {'type': 'grass', 'variant': 1, 'pos': (3 + i, 10)}  # 3-10 on X, 10 on Y. Horizontal line of grass tiles.
             self.tilemap['10;' + str(5 + i)] = {'type': 'stone', 'variant': 1, 'pos': (10, 5 + i)}  # 10 on X, 5-15 on Y. Vertical line of stone tiles. 
             
+    def tile_around(self, pos):
+        tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))  # convert pixel pos into grid pos
+        for offset in NEIGHBOR_OFFSETS:
+            check_loc = str()
+
     def render(self, surf):
         for tile in self.offgrid_tiles:
             surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos']))
