@@ -23,15 +23,15 @@ class Game:
 
         self.collision_area = pygame.Rect(50, 50, 300, 50) # create area to test collision with
 
-        self.player = PhysicsEntity(self, e_type='player', pos=(50, 50), size=(8, 15))
+        self.player = PhysicsEntity(self, e_type='player', pos=(50, 50), size=(8, 15))  # instantiate player obj for use in game/run function in main.
 
 
     def run(self):
         while True:
-            self.screen.fill((14, 219, 248))  # reset screen with background color (R, B, G)
+            self.screen.fill((14, 219, 248))  # each call, set screen with background color (R, B, G)
 
-            self.player.update((self.movement[1] - self.movement[0], 0))
-            self.player.render(self.screen)
+            self.player.update((self.movement[1] - self.movement[0], 0))  # each call, update  player movement bools, accounting for if both (Left and Right keys) are being pressed adding to 0 (False), and for now we are not allowing y movement.
+            self.player.render(self.screen)  #
             
             for event in pygame.event.get():  # handles all kinds of events, including key press, mouse movement etc.
                 if event.type == pygame.QUIT:

@@ -1,3 +1,7 @@
+# File: utils.py
+# Author: Zane Deso
+# Purpose: Serves currently as a convienience function toolset for use in other files/scripts.
+
 import pygame
 
 BASE_IMG_PATH = 'data/images/'
