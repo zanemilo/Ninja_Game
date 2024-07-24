@@ -47,6 +47,9 @@ class PhysicsEntity:
 
         self.velocity[1] = min(5, self.velocity[1] + 0.1)  # nice way of doing take the smaller number to make terminal velocity <= 5.
 
+        if self.collisions['down'] or self.collisions['up']:  # When collision down or up, reset velodity to 0 so velocity does not persist.
+            self.velocity[1] = 0
+
     def render(self, surf):
         """Given surf param, blit the path to the 'player' img at self.pos on the surf param"""
         surf.blit(self.game.assets['player'], self.pos)
