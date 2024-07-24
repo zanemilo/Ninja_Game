@@ -24,7 +24,8 @@ class Game:
             'grass': load_images('tiles/grass'),
             'large_decor': load_images('tiles/large_decor'),
             'stone': load_images('tiles/stone') ,
-            'player': load_image('entities/player.png')
+            'player': load_image('entities/player.png'),
+            'background': load_image('background.png'),
         }
 
         print(self.assets )
@@ -37,16 +38,18 @@ class Game:
 
     def run(self):
         while True:
-            self.display.fill((14, 219, 248))  # each call, set screen with background color (R, B, G)
+            self.display.blit(self.assets['background'], (0, 0))
+
 
             # since orientation of camera is based on top left, subtract part of screen size to centerplayer then /30 will ramp slow/speed up depending on distance
-            self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) / 30  
-            self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 30
+            self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) /30
+            self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) /30
+            render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
 
-            self.tilemap.render(self.display, offset=self.scroll)  # each call, render tile map
+            self.tilemap.render(self.display, offset=render_scroll)  # each call, render tile map
 
             self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0))  # each call, update  player movement bools, accounting for if both (Left and Right keys) are being pressed adding to 0 (False), and for now we are not allowing y movement.
-            self.player.render(self.display, offset=self.scroll)  # each call, render player
+            self.player.render(self.display, offset=render_scroll)  # each call, render player
             
             for event in pygame.event.get():  # handles all kinds of events, including key press, mouse movement etc.
                 if event.type == pygame.QUIT:
