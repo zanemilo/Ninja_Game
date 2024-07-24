@@ -15,7 +15,7 @@ class Game:
         pygame.display.set_caption("Ninja Game")  # Name of game, appears top lef tof window
         self.screen = pygame.display.set_mode((640, 480))  # screen obj. Resolution of window
         self.display = pygame.Surface((320, 240))  # the actual display that you render onto, Surface is an empty image, all black by default
-
+        
         self.clock = pygame.time.Clock()
 
         self.movement = [False, False]  # Boolean representation of if Left, Right keys respectively are being pressed/held or not.
