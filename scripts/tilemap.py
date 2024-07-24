@@ -37,10 +37,13 @@ class Tilemap:
     def render(self, surf, offset=(0, 0)):
         for tile in self.offgrid_tiles:
             surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos'] - offset[0], tile['pos'] - offset[1]))
-         
-        for loc in self.tilemap: # Every tile is on a square grid
-            tile = self.tilemap[loc]
-            # render the tile onto param surf, position of tile is based on dict position in tilemap then multiplies them by tile_size attribute
-            surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos'][0] * self.tile_size - offset[0], tile['pos'][1] * self.tile_size - offset[-1]))
+
+        for x in range(offset[0] // self.tile_size, (offset[0] + surf.get_width()) // self.tile_size + 1):  # divde offset by tile size finding top left tile, find right edge of screen (off by one error)
+            for y in range(offset[1] // self.tile_size, (offset[1] + surf.get_height()) // self.tile_size + 1):
+                loc = str(x) + ';' + str(y)
+                if loc in self.tilemap:
+                    tile = self.tilemap[loc]
+                    surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos'][0] * self.tile_size - offset[0], tile['pos'][1] * self.tile_size - offset[-1]))
+        
 
     
