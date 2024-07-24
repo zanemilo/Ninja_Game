@@ -40,7 +40,7 @@ class Game:
 
             self.tilemap.render(self.display)  # each call, render tile map
 
-            self.player.update((self.movement[1] - self.movement[0], 0))  # each call, update  player movement bools, accounting for if both (Left and Right keys) are being pressed adding to 0 (False), and for now we are not allowing y movement.
+            self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0))  # each call, update  player movement bools, accounting for if both (Left and Right keys) are being pressed adding to 0 (False), and for now we are not allowing y movement.
             self.player.render(self.display)  # each call, render player
             
             for event in pygame.event.get():  # handles all kinds of events, including key press, mouse movement etc.
