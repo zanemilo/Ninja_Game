@@ -14,12 +14,13 @@ class Tilemap:
             self.tilemap['10;' + str(5 + i)] = {'type': 'stone', 'variant': 1, 'pos': (10, 5 + i)}  # 10 on X, 5-15 on Y. Vertical line of stone tiles. 
             
     def tile_around(self, pos):
+        """Return the 9 tiles surronding the pos given, use NEIGHBOR_OFFSETS const to calc the 9 surrnding by adding offset to pos coords."""
         tiles = []  # tiles to be returned
         tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))  # convert pixel pos into grid pos
         for offset in NEIGHBOR_OFFSETS:
             check_loc = str(tile_loc[0] + offset[0]) + ";" + str(tile_loc[1] + offset[1]) # adding offsets to base location
-            if check_loc in self.tilemap:
-                tiles.append(self.tilemap[check_loc])
+            if check_loc in self.tilemap:  # check to see if the tile location is actually in tilemap
+                tiles.append(self.tilemap[check_loc])  # if so, add it to tiles to be returned
         return tiles
 
     def render(self, surf):
