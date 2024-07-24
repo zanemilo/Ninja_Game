@@ -33,15 +33,20 @@ class Game:
 
         self.tilemap = Tilemap(self, tile_size=16)  # self to pass in game reference to then instantiate Tilemap with default size 16
 
+        self.scroll = [0, 0]  # camera location
 
     def run(self):
         while True:
             self.display.fill((14, 219, 248))  # each call, set screen with background color (R, B, G)
 
-            self.tilemap.render(self.display)  # each call, render tile map
+            # since orientation of camera is based on top left, subtract part of screen size to centerplayer then /30 will ramp slow/speed up depending on distance
+            self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) / 30  
+            self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 30
+
+            self.tilemap.render(self.display, offset=self.scroll)  # each call, render tile map
 
             self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0))  # each call, update  player movement bools, accounting for if both (Left and Right keys) are being pressed adding to 0 (False), and for now we are not allowing y movement.
-            self.player.render(self.display)  # each call, render player
+            self.player.render(self.display, offset=self.scroll)  # each call, render player
             
             for event in pygame.event.get():  # handles all kinds of events, including key press, mouse movement etc.
                 if event.type == pygame.QUIT:

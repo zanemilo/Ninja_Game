@@ -50,6 +50,6 @@ class PhysicsEntity:
         if self.collisions['down'] or self.collisions['up']:  # When collision down or up, reset velodity to 0 so velocity does not persist.
             self.velocity[1] = 0
 
-    def render(self, surf):
+    def render(self, surf, offset):
         """Given surf param, blit the path to the 'player' img at self.pos on the surf param"""
-        surf.blit(self.game.assets['player'], self.pos)
+        surf.blit(self.game.assets['player'], (self.pos[0] - offset[0], self.pos[1] - offset[1]))

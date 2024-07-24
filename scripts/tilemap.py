@@ -34,13 +34,13 @@ class Tilemap:
                 rects.append(pygame.Rect(tile['pos'][0] * self.tile_size, tile['pos'][1] * self.tile_size, self.tile_size, self.tile_size))  
         return rects
 
-    def render(self, surf):
+    def render(self, surf, offset=(0, 0)):
         for tile in self.offgrid_tiles:
-            surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos']))
-        
+            surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos'] - offset[0], tile['pos'] - offset[1]))
+         
         for loc in self.tilemap: # Every tile is on a square grid
             tile = self.tilemap[loc]
             # render the tile onto param surf, position of tile is based on dict position in tilemap then multiplies them by tile_size attribute
-            surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos'][0] * self.tile_size, tile['pos'][1] * self.tile_size ))
+            surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos'][0] * self.tile_size - offset[0], tile['pos'][1] * self.tile_size - offset[-1]))
 
     
