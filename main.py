@@ -26,6 +26,7 @@ class Game:
             'stone': load_images('tiles/stone') ,
             'player': load_image('entities/player.png'),
             'background': load_image('background.png'),
+            
         }
 
         print(self.assets )
