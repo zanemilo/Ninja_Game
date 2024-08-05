@@ -32,14 +32,37 @@ class Editor:
 
         self.scroll = [0, 0]  # camera location
 
+        self.tile_list = list(self.assets)  # convert assets into a list
+        self.tile_group = 0  
+        self.tile_variant = 0  
+
+        self.clicking = False
+        right_clicking = False
+
     def run(self):
         while True:
             self.display.fill((0, 0, 0))  # black background
+
+            current_tile_img = self.assets[self.tile_list[self.tile_group]][self.tile_variant].copy()  # copy is to keep alpha channel
+            current_tile_img.set_alpha(100)  # set it so the img is partiall transparent
+
+            self.display.blit(current_tile_img, (5, 5))
             
             for event in pygame.event.get():  # handles all kinds of events, including key press, mouse movement etc.
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        self.clicking = True
+                    if event.button == 3:
+                        self.right_clicking = True
+                    if event.button == 4:
+                        self.tile_group = (self.tile_group - 1) % len(self.tile_list)  # loops over the list up to length then back to 0
+                    if event.button == 5:
+                        self.tile_group = (self.tile_group + 1) % len(self.tile_list)
+
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT:
                         self.movement[0] = True
