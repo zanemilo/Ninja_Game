@@ -38,8 +38,6 @@ class Game:
 
         self.clouds = Clouds(self.assets['clouds'], count=16)
 
-        print(self.assets)
-
         self.player = Player(self, pos=(50, 50), size=(8, 15))  # instantiate player obj for use in game/run function in main.
 
         self.tilemap = Tilemap(self, tile_size=16)  # self to pass in game reference to then instantiate Tilemap with default size 16
