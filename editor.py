@@ -44,8 +44,20 @@ class Editor:
         while True:
             self.display.fill((0, 0, 0))  # black background
 
+            render_scroll = (int(self.scroll[0]), int(self.scroll[1]))  # truncated version of our scroll
+
+            self.tilemap.render(self.display, offset=render_scroll)
+
             current_tile_img = self.assets[self.tile_list[self.tile_group]][self.tile_variant].copy()  # copy is to keep alpha channel
             current_tile_img.set_alpha(100)  # set it so the img is partiall transparent
+
+            mpos = pygame.mouse.get_pos()  # provides pixel coords of mouse with respect to window
+            mpos = (mpos[0] / RENDER_SCALE, mpos[1] / RENDER_SCALE)
+            tile_pos = (int((mpos[0] + self.scroll[0])  // self.tilemap.tile_size), int((mpos[1] + self.scroll[1]) // self.tilemap.tile_size))  # Provides coords of mouse in terms of tile system
+
+            if self.clicking:
+                # converts index selection into str name for the group
+                self.tilemap.tilemap[str(tile_pos[0]) + ';' + str(tile_pos[1])] = {'type': self.tile_list[self.tile_group], 'variant': self.tile_variant, 'pos': tile_pos}
 
             self.display.blit(current_tile_img, (5, 5))
             
@@ -67,8 +79,15 @@ class Editor:
                     else:
                         if event.button == 4:
                             self.tile_group = (self.tile_group - 1) % len(self.tile_list)  # loops over the list up to length then back to 0
+                            self.tile_variant = 0  # if you change the tile you are looking at, start at first tile
                         if event.button == 5:
                             self.tile_group = (self.tile_group + 1) % len(self.tile_list)
+                            self.tile_variant = 0
+                if event.type == pygame.MOUSEBUTTONUP:
+                    if event.button == 1:
+                        self.clicking = False
+                    if event.button == 3:
+                        self.right_clicking = False
 
 
                 if event.type == pygame.KEYDOWN:
