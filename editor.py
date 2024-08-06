@@ -29,7 +29,11 @@ class Editor:
         self.movement = [False, False, False, False]  # Boolean representation of if Left, Right, UP and Down keys respectively are being pressed/held or not.
 
         self.tilemap = Tilemap(self, tile_size=16)  # self to pass in game reference to then instantiate Tilemap with default size 16
-
+        try:
+            self.tilemap.load('map.json')
+        except FileNotFoundError:
+            pass
+        
         self.scroll = [0, 0]  # camera location
 
         self.tile_list = list(self.assets)  # convert assets into a list

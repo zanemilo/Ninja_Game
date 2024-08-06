@@ -23,9 +23,20 @@ class Tilemap:
         return tiles
     
     def save(self, path):
+        """Saves tilemap editors current tile placements into json file"""
         f = open(path, 'w')  # open file
         json.dump({'tilemap': self.tilemap, 'tile_size': self.tile_size, 'offgrid': self.offgrid_tiles}, f)  # dump specified contents into file
         f.close()
+
+    def load(self, path):
+        """Loads tilemap"""
+        f = open(path, 'r')
+        map_data = json.load(f)
+        f.close()
+
+        self.tilemap = map_data['tilemap']
+        self.tile_size = map_data['tile_size']
+        self.offgrid_tiles = map_data['offgrid']
     
     def physics_rects_around(self, pos):
         rects = []  # rects to be returned
