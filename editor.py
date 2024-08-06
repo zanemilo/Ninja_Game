@@ -72,6 +72,11 @@ class Editor:
                 tile_loc = str(tile_pos[0]) + ';' + str(tile_pos[1])
                 if tile_loc in self.tilemap.tilemap:
                     del self.tilemap.tilemap[tile_loc]  # tilemap attribute of the tilemap object (tilemap.tilemap)
+                for tile in self.tilemap.offgrid_tiles.copy():
+                    tile_img = self.assets[tile['type']][tile['variant']]
+                    tile_r = pygame.Rect(tile['pos'][0] - self.scroll[0], tile['pos'][1] - self.scroll[1], tile_img.get_width(), tile_img.get_height())  # Convert world space into screen space
+                    if tile_r.collidepoint(mpos):
+                        self.tilemap.offgrid_tiles.remove(tile)
 
             self.display.blit(current_tile_img, (5, 5))
             
