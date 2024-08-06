@@ -39,6 +39,7 @@ class Editor:
         self.clicking = False
         self.right_clicking = False
         self.shift = False
+        self.ongrid = True
 
     def run(self):
         while True:
@@ -57,10 +58,14 @@ class Editor:
             mpos = (mpos[0] / RENDER_SCALE, mpos[1] / RENDER_SCALE)
             tile_pos = (int((mpos[0] + self.scroll[0])  // self.tilemap.tile_size), int((mpos[1] + self.scroll[1]) // self.tilemap.tile_size))  # Provides coords of mouse in terms of tile system
 
-            # Scale to pixel coords, displays preview of tiles to be place snapped ot gird
-            self.display.blit(current_tile_img, (tile_pos[0] * self.tilemap.tile_size -  self.scroll[0], tile_pos[1] * self.tilemap.tile_size - self.scroll[1]))  
+            if self.ongrid:
+                # Scale to pixel coords, displays preview of tiles to be place snapped ot gird
+                self.display.blit(current_tile_img, (tile_pos[0] * self.tilemap.tile_size -  self.scroll[0], tile_pos[1] * self.tilemap.tile_size - self.scroll[1]))
+            else:
+                  # When ongrid toggled, switch to just mpos
+                  self.display.blit(current_tile_img, mpos)
 
-            if self.clicking:  # handles
+            if self.clicking and self.ongrid:
                                     # converts index selection into str name for the group
                 self.tilemap.tilemap[str(tile_pos[0]) + ';' + str(tile_pos[1])] = {'type': self.tile_list[self.tile_group], 'variant': self.tile_variant, 'pos': tile_pos}
             if self.right_clicking:
@@ -78,6 +83,8 @@ class Editor:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         self.clicking = True
+                        if not self.ongrid:
+                            self.tilemap.offgrid_tiles.append({'type': self.tile_list[self.tile_group], 'variant': self.tile_variant, 'pos': (mpos[0] + self.scroll[0], mpos[1] + self.scroll[1])})
                     if event.button == 3:
                         self.right_clicking = True
                     if self.shift:
@@ -108,6 +115,8 @@ class Editor:
                         self.movement[2] = True
                     if event.key == pygame.K_s:
                         self.movement[3] = True
+                    if event.key == pygame.K_g:
+                        self.ongrid = not self.ongrid
                     if event.key == pygame.K_LSHIFT:
                         self.shift = True
                 if event.type == pygame.KEYUP:
