@@ -44,6 +44,8 @@ class Editor:
         while True:
             self.display.fill((0, 0, 0))  # black background
 
+            self.scroll[0] += (self.movement[1] - self.movement[0]) * 2  # X Axis, camera movement.
+            self.scroll[1] += (self.movement[3] - self.movement[2]) * 2  # Y Axis, camera movement. Mult by 2 to increase speed
             render_scroll = (int(self.scroll[0]), int(self.scroll[1]))  # truncated version of our scroll
 
             self.tilemap.render(self.display, offset=render_scroll)
@@ -55,7 +57,8 @@ class Editor:
             mpos = (mpos[0] / RENDER_SCALE, mpos[1] / RENDER_SCALE)
             tile_pos = (int((mpos[0] + self.scroll[0])  // self.tilemap.tile_size), int((mpos[1] + self.scroll[1]) // self.tilemap.tile_size))  # Provides coords of mouse in terms of tile system
 
-            self.display.blit(current_tile_img, (tile_pos[0] * self.tilemap.tile_size -  self.scroll[0], tile_pos[1] * self.tilemap.tile_size - self.scroll[1]))  # Scale to pixel coords
+            # Scale to pixel coords, displays preview of tiles to be place snapped ot gird
+            self.display.blit(current_tile_img, (tile_pos[0] * self.tilemap.tile_size -  self.scroll[0], tile_pos[1] * self.tilemap.tile_size - self.scroll[1]))  
 
             if self.clicking:  # handles
                                     # converts index selection into str name for the group
