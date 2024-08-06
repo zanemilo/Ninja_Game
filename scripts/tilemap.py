@@ -1,3 +1,5 @@
+import json
+
 import pygame
 
 NEIGHBOR_OFFSETS = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (0, 0), (-1, 1), (0, 1), (1, 1)] # All of the offsets to calc/help look up 9 tiles around the player for physics
@@ -19,6 +21,11 @@ class Tilemap:
             if check_loc in self.tilemap:  # check to see if the tile location is actually in tilemap
                 tiles.append(self.tilemap[check_loc])  # if so, add it to tiles to be returned
         return tiles
+    
+    def save(self, path):
+        f = open(path, 'w')  # open file
+        json.dump({'tilemap': self.tilemap, 'tile_size': self.tile_size, 'offgrid': self.offgrid_tiles}, f)  # dump specified contents into file
+        f.close()
     
     def physics_rects_around(self, pos):
         rects = []  # rects to be returned
