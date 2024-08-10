@@ -43,7 +43,10 @@ class Game:
         self.tilemap = Tilemap(self, tile_size=16)  # self to pass in game reference to then instantiate Tilemap with default size 16
         self.tilemap.load("map.json")
 
-        self.tilemap.extract([('large_decor', 2)], keep=True)
+        self.leaf_spawners = []
+        for tree in self.tilemap.extract([('large_decor', 2)], keep=True):
+            self.leaf_spawners.append(pygame.Rect(4 + tree['pos'][0], 4 + tree['pos'][1], 23, 13))  # Taking the pos of the tile, and area of tree img to spawn leaves with offset of 4 from top left
+        
 
         self.scroll = [0, 0]  # camera location
 
