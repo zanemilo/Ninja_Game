@@ -15,7 +15,7 @@ AUTOTILE_MAP = {  # rules used for autotiling
 
 NEIGHBOR_OFFSETS = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (0, 0), (-1, 1), (0, 1), (1, 1)] # All of the offsets to calc/help look up 9 tiles around the player for physics
 PHYSICS_TILES = {'grass', 'stone'}  # This is a set (a dict without the ": 0" value pair) it is not allowed to have dupes and has faster lookup time than lists
-AUTOTILE_TYPE = {'grass', 'stone'}  # This is the CONST for autotiling tile types
+AUTOTILE_TYPES = {'grass', 'stone'}  # This is the CONST for autotiling tile types
 
 class Tilemap:
     def __init__(self, game, tile_size=16):
@@ -68,7 +68,8 @@ class Tilemap:
                     if self.tilemap[check_loc]['type'] == tile['type']:
                         neighbors.add(shift)
             neighbors = tuple(sorted(neighbors))
-            tile['variant'] = AUTOTILE_MAP[neighbors]
+            if (tile['type'] in AUTOTILE_TYPES) and (neighbors in AUTOTILE_MAP):
+                tile['variant'] = AUTOTILE_MAP[neighbors]
 
     def render(self, surf, offset=(0, 0)):
         for tile in self.offgrid_tiles:
