@@ -29,7 +29,7 @@ class Animation:
         self.frame = 0
 
     def copy(self):
-        return Animation(self.images, self.img_duration, loop=True)
+        return Animation(self.images, self.img_duration, self.loop)
     
     def update(self):
         if self.loop:

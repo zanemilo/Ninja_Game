@@ -1,6 +1,7 @@
 import sys
 
 import random
+import math
 import pygame
 
 from scripts.entities import PhysicsEntity, Player
@@ -35,7 +36,7 @@ class Game:
             'player/jump': Animation(load_images('entities/player/jump')),
             'player/slide': Animation(load_images('entities/player/slide')),
             'player/wall_slide': Animation(load_images('entities/player/wall_slide')),
-            'particle/leaf': Animation(load_images('particles/leaf'))
+            'particle/leaf': Animation(load_images('particles/leaf'), img_dur=20, loop=False)
 
         }
 
@@ -66,8 +67,8 @@ class Game:
 
             for rect in self.leaf_spawners:
                 if random.random() * 49999 < rect.width * rect.height:  # controls rate of particle span makes sure it is proportional to size of object (ie. bigger trees)
-                    pos = rect.x + random.random() * rect.width, rect.y + random.random() * rect.height  # get random number within the bounds of the rect
-                    self.particles.append(Particle(self, 'leaf', pos, velocity=[-0.1, 0.3], frame=random.randint(0, 20)))  #Spawns particle leaf by adding new leaf instance to particles list
+                    pos = (rect.x + random.random() * rect.width, rect.y + random.random() * rect.height)  # get random number within the bounds of the rect
+                    self.particles.append(Particle(self, 'leaf', pos, velocity=[-0.1, 0.3], frame=random.randint(0, 20)))  # Spawns particle leaf by adding new leaf instance to particles list
 
             self.clouds.update()
             self.clouds.render(self.display, offset=render_scroll)
@@ -80,6 +81,8 @@ class Game:
             for particle in self.particles.copy():  # using copy due to removing during iteration
                 kill = particle.update()
                 particle.render(self.display, offset=render_scroll)  # Render the leaf particles
+                if particle.type == 'leaf':
+                    particle.pos[0] += math.sin(particle.animation.frame * 0.035) * 0.3
                 if kill:
                     self.particles.remove(particle)
             
