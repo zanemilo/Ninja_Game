@@ -35,6 +35,7 @@ class Editor:
             pass
         
         self.scroll = [0, 0]  # camera location
+        self.scroll_speed = 3
 
         self.tile_list = list(self.assets)  # convert assets into a list
         self.tile_group = 0  
@@ -49,8 +50,8 @@ class Editor:
         while True:
             self.display.fill((0, 0, 0))  # black background
 
-            self.scroll[0] += (self.movement[1] - self.movement[0]) * 2  # X Axis, camera movement.
-            self.scroll[1] += (self.movement[3] - self.movement[2]) * 2  # Y Axis, camera movement. Mult by 2 to increase speed
+            self.scroll[0] += (self.movement[1] - self.movement[0]) * self.scroll_speed  # X Axis, camera movement.
+            self.scroll[1] += (self.movement[3] - self.movement[2]) * self.scroll_speed  # Y Axis, camera movement. Mult by 2 to increase speed
             render_scroll = (int(self.scroll[0]), int(self.scroll[1]))  # truncated version of our scroll
 
             self.tilemap.render(self.display, offset=render_scroll)
@@ -130,6 +131,7 @@ class Editor:
                         self.tilemap.save('map.json')
                     if event.key == pygame.K_LSHIFT:
                         self.shift = True
+                        self.scroll_speed += 1
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_a:
                         self.movement[0] = False
@@ -141,6 +143,7 @@ class Editor:
                         self.movement[3] = False
                     if event.key == pygame.K_LSHIFT:
                         self.shift = False
+                        self.scroll_speed = 3
 
             self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))  # Render display onto screen (window), transform the size of display to screen (get its size)
             pygame.display.update()
