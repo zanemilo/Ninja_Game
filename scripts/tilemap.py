@@ -23,6 +23,27 @@ class Tilemap:
         self.tile_size = tile_size  
         self.tilemap = {}  # Every tile is on a square grid
         self.offgrid_tiles = []  # Tiles for off grid, all over the place
+
+    def extract(self, id_pairs, keep=False):
+        """Take a tile types and tell us where they are and info about them. Can be used for removing things later"""
+        matches = []
+        for tile in self.offgrid_tiles.copy():
+            if (tile['type'], tile['variant']) in id_pairs:
+                matches.append(tile.copy())
+                if not keep:
+                    self.offgrid_tiles.remove(tile)
+        
+        for loc in self.tilemap:
+            tile = self.tilemap[loc]
+            if (tile['type'], tile['variant']) in id_pairs:
+                matches.append(tile.copy())
+                matches[-1]['pos'] = matches[-1]['pos'].copy()  # take copy to refer to clean copy, otherwise risk nested data
+                matches[-1]['pos'][0] *= self.tile_size  # changing pos of tile we are referencing in pixels to grid
+                matches[-1]['pos'][1] *= self.tile_size
+                if not keep:
+                    del self.tilemap[loc]
+
+        return matches
            
     def tile_around(self, pos):
         """Return the 9 tiles surronding the pos given, use NEIGHBOR_OFFSETS const to calc the 9 surrnding by adding offset to pos coords."""

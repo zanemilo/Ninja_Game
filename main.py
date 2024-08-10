@@ -43,6 +43,8 @@ class Game:
         self.tilemap = Tilemap(self, tile_size=16)  # self to pass in game reference to then instantiate Tilemap with default size 16
         self.tilemap.load("map.json")
 
+        self.tilemap.extract([('large_decor', 2)], keep=True)
+
         self.scroll = [0, 0]  # camera location
 
     def run(self):
