@@ -131,7 +131,7 @@ class Editor:
                         self.tilemap.save('map.json')
                     if event.key == pygame.K_LSHIFT:
                         self.shift = True
-                        self.scroll_speed += 1
+                        self.scroll_speed += 2
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_a:
                         self.movement[0] = False
