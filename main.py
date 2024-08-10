@@ -1,11 +1,13 @@
 import sys
 
+import random
 import pygame
 
 from scripts.entities import PhysicsEntity, Player
 from scripts.utils import load_image, load_images, Animation
 from scripts.tilemap import Tilemap
 from scripts.clouds import Clouds
+from scripts.particle import Particle
 
 class Game:
     """ Game obj required for encapsulating game functions, attributes and variables. Thereby presenting cleaner code, following better practices, simplifying troubleshooting and more."""
@@ -33,6 +35,7 @@ class Game:
             'player/jump': Animation(load_images('entities/player/jump')),
             'player/slide': Animation(load_images('entities/player/slide')),
             'player/wall_slide': Animation(load_images('entities/player/wall_slide')),
+            'particle/leaf': Animation(load_images('particles/leaf'))
 
         }
 
@@ -47,6 +50,7 @@ class Game:
         for tree in self.tilemap.extract([('large_decor', 2)], keep=True):
             self.leaf_spawners.append(pygame.Rect(4 + tree['pos'][0], 4 + tree['pos'][1], 23, 13))  # Taking the pos of the tile, and area of tree img to spawn leaves with offset of 4 from top left
         
+        self.particles = []
 
         self.scroll = [0, 0]  # camera location
 
@@ -60,6 +64,11 @@ class Game:
             self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) /30
             render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
 
+            for rect in self.leaf_spawners:
+                if random.random() * 49999 < rect.width * rect.height:  # controls rate of particle span makes sure it is proportional to size of object (ie. bigger trees)
+                    pos = rect.x + random.random() * rect.width, rect.y + random.random() * rect.height  # get random number within the bounds of the rect
+                    self.particles.append(Particle(self, 'leaf', pos, velocity=[-0.1, 0.3], frame=random.randint(0, 20)))  #Spawns particle leaf by adding new leaf instance to particles list
+
             self.clouds.update()
             self.clouds.render(self.display, offset=render_scroll)
 
@@ -67,6 +76,12 @@ class Game:
 
             self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0))  # each call, update  player movement bools, accounting for if both (Left and Right keys) are being pressed adding to 0 (False), and for now we are not allowing y movement.
             self.player.render(self.display, offset=render_scroll)  # each call, render player
+
+            for particle in self.particles.copy():  # using copy due to removing during iteration
+                kill = particle.update()
+                particle.render(self.display, offset=render_scroll)  # Render the leaf particles
+                if kill:
+                    self.particles.remove(particle)
             
             for event in pygame.event.get():  # handles all kinds of events, including key press, mouse movement etc.
                 if event.type == pygame.QUIT:
