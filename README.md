@@ -13,5 +13,5 @@ The purpose of this document is to serve in the tracking the progress of myself,
 ### Bugs
 
 Refer to 3:50:37. 
-    - Issue where wall_slide down rock tiles flickers between animations.
-    - Problem with velocity NOT increasing to the left when wall jumping frmo the right.
+    - Issue where wall_slide down rock tiles flickers between animations. [Fixed]
+    - Problem with velocity NOT increasing to the left when wall jumping frmo the right. [Fixed]
