@@ -87,7 +87,10 @@ class Enemy(PhysicsEntity):
 
     def update(self, tilemap, movement=(0, 0)):
         if self.walking:
-            movement = (movement[0] - 0.5 if self.flip else 0.5, movement[1])
+            if tilemap.solid_check((self.rect().centerx + (-7 if self.flip else 7), self.pos[1] + 23)):  # looking 7 pixes to right or left from center, and in the ground
+                movement = (movement[0] - 0.5 if self.flip else 0.5, movement[1])
+            else:
+                self.flip = not self.flip
             self.walking = max(0, self.walking - 1)
         elif random.random() < 0.01:  # if not walking, 1% chance of occuring each frame
             self.walking = random.randint(30, 120)  # number of frames to continually walk for randomly generated
