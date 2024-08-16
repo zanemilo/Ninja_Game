@@ -81,6 +81,7 @@ class Player(PhysicsEntity):
         self.air_time = 0
         self.jumps = 2
         self.walls_slide = False
+        self.dashing = 0
          
     def update(self, tilemap, movement=(0, 0)):
         super().update(tilemap, movement=movement)
@@ -110,6 +111,16 @@ class Player(PhysicsEntity):
             else:
                 self.set_action('idle')
 
+        if self.dashing > 0:
+            self.dashing = max(0, self.dashing - 1)  # Pull dashing towards 0
+        if self.dashing < 0:
+            self.dashing = min(0, self.dashing + 1)  # Pull dashing towards 0
+        if abs(self.dashing) > 50: 
+            self.velocity[0] = abs(self.dashing) / self.dashing * 8  # In the first ten frames of dash, set velocity to scalar direction 
+            if abs(self.dashing) == 51:
+                self.velocity[0] *= 0.1  # At the end of the first ten frames, cut down on velocity (sudden stop)
+            
+
         if self.velocity[0] > 0:
             self.velocity[0] = max(self.velocity[0] - 0.1, 0)  # Pull velocity towards 0
         else:
@@ -136,3 +147,9 @@ class Player(PhysicsEntity):
             self.air_time = 5
             return True
 
+    def dash(self):
+        if not self.dashing:
+            if self.flip:  # Moving left
+                self.dashing = -60
+            else:  # Moving Right
+                self.dashing = 60
