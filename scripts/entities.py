@@ -1,4 +1,8 @@
+import math
+import random
 import pygame
+
+from scripts.particle import Particle
 
 class PhysicsEntity:
     def __init__(self, game, e_type, pos, size):
@@ -119,12 +123,26 @@ class Player(PhysicsEntity):
             self.velocity[0] = abs(self.dashing) / self.dashing * 8  # In the first ten frames of dash, set velocity to scalar direction 
             if abs(self.dashing) == 51:
                 self.velocity[0] *= 0.1  # At the end of the first ten frames, cut down on velocity (sudden stop)
+                pvelocity = [abs(self.dashing) /  self.dashing * random.random() * 3, 0]
+                self.game.particles.append(Particle(self.game, 'particle', self.rect().center, velocity=pvelocity, frame=random.randint(0, 7)))  # Stream particles
+        if abs(self.dashing) in {60, 50}:  # At start and end of dash
+            for i in range(20):  # create 20 particles
+                angle = random.random() * math.pi * 2  # Take random angle from all angles in a circle
+                speed = random.random() * 0.5 + 0.5    #  Take the cos of a random angle, and speed then
+                pvelocity = [math.cos(angle) * speed, math.sin(angle) * speed]  # Generate velocity based on the angle, trig
+                #  Take the cos of a random angle, and speed then 
+                self.game.particles.append(Particle(self.game, 'particle', self.rect().center, velocity=pvelocity, frame=random.randint(0, 7)))  # Burst of particles
             
 
         if self.velocity[0] > 0:
             self.velocity[0] = max(self.velocity[0] - 0.1, 0)  # Pull velocity towards 0
         else:
             self.velocity[0] = min(self.velocity[0] + 0.1, 0)
+
+    def render(self, surf, offset=(0, 0)):
+        """Polymorph function to make the player invisible after first ten frames of dashing"""
+        if abs(self.dashing) <= 50: #If not in first ten frames of dash in either direction
+            super().render(surf, offset=offset)  # super to call parent class render function
 
     def jump(self):
         if self.walls_slide:
