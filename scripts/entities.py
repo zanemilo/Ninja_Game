@@ -118,13 +118,13 @@ class Player(PhysicsEntity):
     def jump(self):
         if self.walls_slide:
             if self.flip and self.last_movement[0] < 0:
-                self.velocity[0] += 3.5  # push away from wall
+                self.velocity[0] += 2.7  # push away from wall
                 self.velocity[1] = -2.5 # wall jump
                 self.air_time = 5
                 self.jumps = max(0, self.jumps - 1)
                 return True
             elif not self.flip and self.last_movement[0] > 0:
-                self.velocity[0] += -3.5  # push away from wall
+                self.velocity[0] -= 2.7  # push away from wall
                 self.velocity[1] = -2.5 # wall jump
                 self.air_time = 5
                 self.jumps = max(0, self.jumps - 1)
