@@ -125,7 +125,7 @@ class Player(PhysicsEntity):
                 self.velocity[0] *= 0.1  # At the end of the first ten frames, cut down on velocity (sudden stop)
             pvelocity = [abs(self.dashing) /  self.dashing * random.random() * 3, 0]
             self.game.particles.append(Particle(self.game, 'particle', self.rect().center, velocity=pvelocity, frame=random.randint(0, 7)))  # Stream particles
-        if abs(self.dashing) in {60, 50}:  # At start and end of dash
+        if abs(self.dashing) in {59, 49}:  # At start and end of dash
             for i in range(20):  # create 20 particles
                 angle = random.random() * math.pi * 2  # Take random angle from all angles in a circle
                 speed = random.random() * 0.5 + 0.5    #  Take the cos of a random angle, and speed then
