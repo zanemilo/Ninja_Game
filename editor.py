@@ -24,6 +24,7 @@ class Editor:
             'grass': load_images('tiles/grass'),
             'large_decor': load_images('tiles/large_decor'),
             'stone': load_images('tiles/stone'),
+            'spawners': load_images('tiles/spawners'),
         }
 
         self.movement = [False, False, False, False]  # Boolean representation of if Left, Right, UP and Down keys respectively are being pressed/held or not.

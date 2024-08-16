@@ -79,6 +79,22 @@ class PhysicsEntity:
         """Given surf param, blit the path to the current animation img at self.pos on the surf param with built in scroll offset and animating offset"""
         surf.blit(pygame.transform.flip(self.animation.img(), self.flip, False), (self.pos[0] - offset[0] + self.anim_offset[0], self.pos[1] - offset[1] + self.anim_offset[1]))
 
+class Enemy(PhysicsEntity):
+    def __init__(self, game, pos, size):
+        super().__init__(game, 'enemy', pos, size)
+
+        self.walking = 0
+
+    def update(self, tilemap, movement=(0, 0)):
+        if self.walking:
+            movement = (movement[0] - 0.5 if self.flip else 0.5, movement[1])
+            self.walking = max(0, self.walking - 1)
+        elif random.random() < 0.01:  # if not walking, 1% chance of occuring each frame
+            self.walking = random.randint(30, 120)  # number of frames to continually walk for randomly generated
+
+        super().update(tilemap, movement=movement)
+    
+
 class Player(PhysicsEntity):
     def __init__(self, game, pos, size):
         super().__init__(game, 'player', pos, size)
