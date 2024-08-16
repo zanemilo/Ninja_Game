@@ -94,7 +94,15 @@ class Enemy(PhysicsEntity):
                     movement = (movement[0] - 0.5 if self.flip else 0.5, movement[1])  # change movement amount based on direction enemy faces
             else:
                 self.flip = not self.flip
-            self.walking = max(0, self.walking - 1)
+            self.walking = max(0, self.walking - 1)  # modifies walking to zero
+            if not self.walking:  # triggers for one frame
+                dis = (self.game.player.pos[0] - self.pos[0], self.game.player.pos[1] - self.pos[1])  # diff between player and enemy position
+                if abs(dis[1] < 16):
+                    if (self.flip and dis[0] < 0):  # player to the left, enemy look left
+                        self.game.projectiles.append([[self.rect().centerx - 7, self.rect().centery], -1.5, 0])
+                    if (not self.flip and dis[0] > 0):  # player to the right, enemy look right
+                        self.game.projectiles.append([[self.rect().centerx + 7, self.rect().centery], 1.5, 0])
+
         elif random.random() < 0.01:  # if not walking, 1% chance of occuring each frame
             self.walking = random.randint(30, 120)  # number of frames to continually walk for randomly generated
 

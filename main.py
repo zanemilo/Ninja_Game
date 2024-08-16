@@ -41,6 +41,7 @@ class Game:
             'particle/leaf': Animation(load_images('particles/leaf'), img_dur=20, loop=False),
             'particle/particle': Animation(load_images('particles/particle'), img_dur=6, loop=False),
             'gun': load_image('gun.png'),
+            'projectile': load_image('projectile.png'),
         }
 
         self.clouds = Clouds(self.assets['clouds'], count=16)
@@ -61,6 +62,7 @@ class Game:
             else:
                 self.enemies.append(Enemy(self, spawner['pos'], (8, 15)))  # Create enemy with game, spawner pos and premeasured demensions of asset
 
+        self.projectiles = []    
         self.particles = []
 
         self.scroll = [0, 0]  # camera location
@@ -91,6 +93,20 @@ class Game:
 
             self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0))  # each call, update  player movement bools, accounting for if both (Left and Right keys) are being pressed adding to 0 (False), and for now we are not allowing y movement.
             self.player.render(self.display, offset=render_scroll)  # each call, render player
+
+            # [[x, y], direction, timer]
+            for projectile in self.projectiles.copy():
+                projectile[0][0] += projectile[1] 
+                projectile[2] += 1
+                img = self.assets['projectile']
+                self.display.blit(img, (projectile[0][0] - img.get_width() / 2 - render_scroll[0], projectile[0][1] - img.get_height() / 2 - render_scroll[1]))
+                if self.tilemap.solid_check(projectile[0]): # if the loc of projectile is a solid tile remove it
+                    self.projectiles.remove(projectile)
+                elif projectile[2] > 360:  # if timer gets above 360 frames remove it
+                    self.projectiles.remove(projectile)
+                elif abs(self.player.dashing) < 50:  # if player mid dash, cannot be hit by bullets
+                    if self.player.rect().collidepoint(projectile[0]): # collide with player
+                        self.projectiles.remove(projectile)
 
             for particle in self.particles.copy():  # using copy due to removing during iteration
                 kill = particle.update()
