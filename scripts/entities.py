@@ -79,7 +79,7 @@ class Player(PhysicsEntity):
     def __init__(self, game, pos, size):
         super().__init__(game, 'player', pos, size)
         self.air_time = 0
-        self.jumps = 1
+        self.jumps = 2
         self.walls_slide = False
          
     def update(self, tilemap, movement=(0, 0)):
@@ -88,10 +88,10 @@ class Player(PhysicsEntity):
         self.air_time += 1
         if self.collisions['down']:
             self.air_time = 0
-            self.jumps = 1
+            self.jumps = 2
 
         self.walls_slide = False  # Single frame switch to reset wall_slide
-        if (self.collisions['right'] or self.collisions['left']) and self.air_time > 4:  # if we hit the wall on either sied and we are in the air
+        if (self.collisions['right'] or self.collisions['left']) and self.air_time > 4:  # if we hit the wall on either side and we are in the air
             self.walls_slide = True
             self.velocity[1] = min(self.velocity[1], 0.5)  # Cap drop rate if wall sliding
             if self.collisions['right']:
@@ -99,6 +99,8 @@ class Player(PhysicsEntity):
             else:
                 self.flip = True
             self.set_action('wall_slide')
+        
+            
 
         if not self.walls_slide:
             if self.air_time > 4:
@@ -122,7 +124,7 @@ class Player(PhysicsEntity):
                 self.jumps = max(0, self.jumps - 1)
                 return True
             elif not self.flip and self.last_movement[0] > 0:
-                self.velocity[0] = -3.5  # push away from wall
+                self.velocity[0] = -5  # push away from wall
                 self.velocity[1] = -2.5 # wall jump
                 self.air_time = 5
                 self.jumps = max(0, self.jumps - 1)

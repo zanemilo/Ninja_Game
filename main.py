@@ -1,7 +1,7 @@
 import sys
-
 import random
 import math
+
 import pygame
 
 from scripts.entities import PhysicsEntity, Player
