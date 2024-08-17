@@ -50,7 +50,7 @@ class Game:
         self.player = Player(self, pos=(50, 50), size=(8, 15))  # instantiate player obj for use in game/run function in main.
 
         self.tilemap = Tilemap(self, tile_size=16)  # self to pass in game reference to then instantiate Tilemap with default size 16
-        self.load_level(2)
+        self.load_level(0)
 
 
     def load_level(self, map_id):
@@ -71,11 +71,16 @@ class Game:
         self.sparks = []
 
         self.scroll = [0, 0]  # camera location
+        self.dead = 0
 
     def run(self):
         while True:
             self.display.blit(self.assets['background'], (0, 0))
 
+            if self.dead:
+                self.dead += 1
+                if self.dead > 40:
+                    self.load_level(0)
 
             # since orientation of camera is based on top left, subtract part of screen size to centerplayer then /30 will ramp slow/speed up depending on distance
             self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) /30
@@ -98,8 +103,9 @@ class Game:
                 if kill:
                     self.enemies.remove(enemy)
 
-            self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0))  # each call, update  player movement bools, accounting for if both (Left and Right keys) are being pressed adding to 0 (False), and for now we are not allowing y movement.
-            self.player.render(self.display, offset=render_scroll)  # each call, render player
+            if not self.dead:
+                self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0))  # each call, update  player movement bools, accounting for if both (Left and Right keys) are being pressed adding to 0 (False), and for now we are not allowing y movement.
+                self.player.render(self.display, offset=render_scroll)  # each call, render player
 
             # [[x, y], direction, timer]
             for projectile in self.projectiles.copy():
@@ -116,6 +122,7 @@ class Game:
                 elif abs(self.player.dashing) < 50:  # if player mid dash, cannot be hit by bullets
                     if self.player.rect().collidepoint(projectile[0]): # collide with player
                         self.projectiles.remove(projectile)
+                        self.dead += 1
                         for i in range(30):
                             angle = random.random() * math.pi * 2
                             speed = random.random() * 5
