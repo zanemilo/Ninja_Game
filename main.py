@@ -63,6 +63,7 @@ class Game:
         for spawner in self.tilemap.extract([('spawners', 0), ('spawners', 1)]):
             if spawner['variant'] == 0:
                 self.player.pos = spawner['pos']
+                self.player.air_time = 0
             else:
                 self.enemies.append(Enemy(self, spawner['pos'], (8, 15)))  # Create enemy with game, spawner pos and premeasured demensions of asset
 
@@ -77,9 +78,9 @@ class Game:
         while True:
             self.display.blit(self.assets['background'], (0, 0))
 
-            if self.dead:
-                self.dead += 1
-                if self.dead > 40:
+            if self.dead:  # once player is hit, this becomes true
+                self.dead += 1  # starts incrementing to 40
+                if self.dead > 40: # load level after 40
                     self.load_level(0)
 
             # since orientation of camera is based on top left, subtract part of screen size to centerplayer then /30 will ramp slow/speed up depending on distance
