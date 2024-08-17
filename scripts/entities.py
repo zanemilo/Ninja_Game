@@ -102,11 +102,11 @@ class Enemy(PhysicsEntity):
                     if (self.flip and dis[0] < 0):  # player to the left, enemy look left
                         self.game.projectiles.append([[self.rect().centerx - 7, self.rect().centery], -1.5, 0])
                         for i in range(4):
-                            self.sparks.append(Spark(self.projectiles[-1][0], random.random() - 0.5 + math.pi, 2 + random.random()))
+                            self.game.sparks.append(Spark(self.game.projectiles[-1][0], random.random() - 0.5 + math.pi, 2 + random.random()))
                     if (not self.flip and dis[0] > 0):  # player to the right, enemy look right
                         self.game.projectiles.append([[self.rect().centerx + 7, self.rect().centery], 1.5, 0])
                         for i in range(4):
-                            self.sparks.append(Spark(self.projectiles[-1][0], random.random() - 0.5, 2 + random.random()))
+                            self.game.sparks.append(Spark(self.game.projectiles[-1][0], random.random() - 0.5, 2 + random.random()))
 
         elif random.random() < 0.01:  # if not walking, 1% chance of occuring each frame
             self.walking = random.randint(30, 120)  # number of frames to continually walk for randomly generated
