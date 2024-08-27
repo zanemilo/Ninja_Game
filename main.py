@@ -181,9 +181,9 @@ class Game:
                     if event.key == pygame.K_RIGHT:
                         self.movement[1] = True
                     if event.key == pygame.K_UP:
-                        jump = self.player.jump()
-                        if jump:
-                            self.smokes.append(Smoke(self.player.rect().midbottom, random.randint(2, 11) * math.pi/random.randint(2, 11), 2 + random.random()))
+                        if self.player.jumps > 1:
+                            self.smokes.append(Smoke(self.player.rect().midbottom, abs(random.randint(42, 52)), 1.01 * abs(random.randint(2, 3))))
+                        self.player.jump()
                     if event.key == pygame.K_x:
                         self.player.dash()
                 if event.type == pygame.KEYUP:
