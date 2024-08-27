@@ -11,6 +11,7 @@ from scripts.tilemap import Tilemap
 from scripts.clouds import Clouds
 from scripts.particle import Particle
 from scripts.spark import Spark
+from scripts.smoke import Smoke
 
 class Game:
     """ Game obj required for encapsulating game functions, attributes and variables. Thereby presenting cleaner code, following better practices, simplifying troubleshooting and more."""
@@ -75,6 +76,7 @@ class Game:
         self.projectiles = []    
         self.particles = []
         self.sparks = []
+        self.smokes = []
 
         self.scroll = [0, 0]  # camera location
         self.dead = 0
@@ -101,9 +103,9 @@ class Game:
                 if self.dead > 40: # load level after 40
                     self.load_level(self.level)
 
-            # since orientation of camera is based on top left, subtract part of screen size to centerplayer then /30 will ramp slow/speed up depending on distance
-            self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) /30
-            self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) /30
+            # since orientation of camera is based on top left, subtract part of screen size to centerplayer then /24 will ramp slow/speed up depending on distance
+            self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) /24
+            self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) /24
             render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
 
             for rect in self.leaf_spawners:
@@ -155,6 +157,12 @@ class Game:
                 if kill:
                     self.sparks.remove(spark)
 
+            for smoke in self.smokes.copy():
+                kill = smoke.update()
+                smoke.render(self.display, offset=render_scroll)
+                if kill:
+                    self.smokes.remove(smoke)
+
             for particle in self.particles.copy():  # using copy due to removing during iteration
                 kill = particle.update()
                 particle.render(self.display, offset=render_scroll)  # Render the leaf particles
@@ -173,7 +181,9 @@ class Game:
                     if event.key == pygame.K_RIGHT:
                         self.movement[1] = True
                     if event.key == pygame.K_UP:
-                        self.player.jump()
+                        jump = self.player.jump()
+                        if jump:
+                            self.smokes.append(Smoke(self.player.rect().midbottom, random.randint(2, 11) * math.pi/random.randint(2, 11), 2 + random.random()))
                     if event.key == pygame.K_x:
                         self.player.dash()
                 if event.type == pygame.KEYUP:
