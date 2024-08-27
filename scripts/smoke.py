@@ -21,7 +21,7 @@ class Smoke:
         reach = [-8, 8]
         render_points = []
 
-        for i in range(20):
+        for i in range(1):
             render_points.append([self.pos[0] + random.randint(reach[0], 0) - offset[0], self.pos[1] + random.randint(0, reach[1]) - offset[1]])
 
         for element in render_points:
