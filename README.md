@@ -16,7 +16,7 @@ Refer to 3:50:37.
     - Issue where wall_slide down rock tiles flickers between animations. [Fixed]
     - Problem with velocity NOT increasing to the left when wall jumping frmo the right. [Fixed]
 Refer to 4:41:02. [Fixed]
-    - Traceback (most recent call last):
+    ``` Traceback (most recent call last):
         File "c:\Users\zanem\OneDrive\Desktop\SandboxEnviro\python_work\pyGames\DFP_pyGame_Tut_2023\main.py", line 142, in <module>
             Game().run()
         File "c:\Users\zanem\OneDrive\Desktop\SandboxEnviro\python_work\pyGames\DFP_pyGame_Tut_2023\main.py", line 91, in run
@@ -24,3 +24,4 @@ Refer to 4:41:02. [Fixed]
         File "c:\Users\zanem\OneDrive\Desktop\SandboxEnviro\python_work\pyGames\DFP_pyGame_Tut_2023\scripts\entities.py", line 102, in update
             self.game.projectiles.append([[self.rect().centerx - 7, self.rect().centery]], -1.5, 0)
       TypeError: list.append() takes exactly one argument (3 given)
+    ```
