@@ -166,6 +166,7 @@ class Game:
                     if self.player.rect().collidepoint(projectile[0]): # collide with player
                         self.projectiles.remove(projectile)
                         self.dead += 1
+                        self.game.sfx['hit'].play()
                         self.screenshake = max(16, self.screenshake)
                         for i in range(30):
                             angle = random.random() * math.pi * 2
@@ -210,7 +211,8 @@ class Game:
                     if event.key == pygame.K_UP:
                         if self.player.jumps > 1:
                             self.smokes.append(Smoke(self.player.rect().midbottom, abs(random.randint(42, 52)), 1.01 * abs(random.randint(2, 3))))
-                        self.player.jump()
+                        if self.player.jump():
+                            self.sfx['jump'].play()
                     if event.key == pygame.K_x:
                         self.player.dash()
                 if event.type == pygame.KEYUP:
