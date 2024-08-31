@@ -20,7 +20,8 @@ class Game:
 
         pygame.display.set_caption("Ninja Game")  # Name of game, appears top lef tof window
         self.screen = pygame.display.set_mode((640, 480))  # screen obj. Resolution of window
-        self.display = pygame.Surface((320, 240))  # the actual display that you render onto, Surface is an empty image, all black by default
+        self.display = pygame.Surface((320, 240), pygame.SRCALPHA)  # the actual display that you render onto, Surface is an empty image, all black by default
+        self.display_2 =  pygame.Surface((320, 240))  # display two will be surf for outlines
         
         self.clock = pygame.time.Clock()
 
@@ -84,7 +85,8 @@ class Game:
 
     def run(self):
         while True:
-            self.display.blit(self.assets['background'], (0, 0))
+            self.display.fill((0, 0, 0, 0))  # fill main display with pure transparency
+            self.display_2.blit(self.assets['background'], (0, 0))
 
             self.screenshake = max(0, self.screenshake - 1)
 
@@ -157,6 +159,11 @@ class Game:
                 if kill:
                     self.sparks.remove(spark)
 
+            display_mask = pygame.mask.from_surface(self.display)  # making a mask from display
+            display_sillhouette = display_mask.to_surface(setcolor=(0, 0, 0, 180), unsetcolor=(0, 0, 0, 0))
+            for offset in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                self.display_2.blit(display_sillhouette, offset)
+
             for smoke in self.smokes.copy():
                 kill = smoke.update()
                 smoke.render(self.display, offset=render_scroll)
@@ -198,8 +205,11 @@ class Game:
                 transition_surf.set_colorkey((255, 255, 255))
                 self.display.blit(transition_surf, (0, 0))
 
+            
+            self.display_2.blit(self.display, (0, 0))
+
             screenshake_offset = (random.random() * self.screenshake - self.screenshake / 2, random.random() * self.screenshake - self.screenshake / 2)
-            self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), screenshake_offset)  # Render display onto screen (window), transform the size of display to screen (get its size)
+            self.screen.blit(pygame.transform.scale(self.display_2, self.screen.get_size()), screenshake_offset)  # Render display onto screen (window), transform the size of display to screen (get its size)
             pygame.display.update()
             self.clock.tick(60)
 
