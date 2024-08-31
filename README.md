@@ -33,6 +33,16 @@
     <p>
     Note: A slow load was noticeable on initial boot but afterwards the game runs smoothly.
     </p>
+<h4> Controls </h4>
+    <p>
+        <ul>
+            <li> Move: Left and right arrow keys.
+            <li> Jump: Up arrow key.
+            <li> Dash Attack: X key.
+            <li> Wall Slide: Push arrow key in direction of wall.
+            <li> Wall Jump: While wall sliding, Up arrow key.
+        </ul>
+    </p>
 <br>
 <img src="Game_Screenshot_002.jpg">
 <h6> Character and world </h6>
