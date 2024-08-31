@@ -18,15 +18,18 @@
             <li> Customized map, using tile editor. Saved and implemented using JSON.
             <li> Adjusted camera smoothing to be less jittery.
             <li> Adjusted wall jump velocity.
+            <li> Created read me using HTML tags.
         </ul>
     </p>
 <br>
 
 <h3> How to play </h3>
     <p>
-    To play Ninja Game, one should simply need to clone the repo to their local device and select the <strong>Ninja Game.exe Shortcut</strong>. Note: A slow load was noticeable on initial boot but afterwards the game runs smoothly.
+    To play Ninja Game, one should simply need to clone the repo to their local device and select the <strong>Ninja Game.exe Shortcut</strong>.
     </p>
-
+    <p>
+    Note: A slow load was noticeable on initial boot but afterwards the game runs smoothly.
+    </p>
 <br>
 <img src="Game_Screenshot_002.jpg">
 <h6> Character and world </h6>
