@@ -8,7 +8,8 @@
     <p>
     The purpose of this project was to complete daFluffyPotato pyGame Tutorial (2023) in 2024. Please see past commits to development history. This tutorial covered a many topics including tiles, tilemaps, physics, entities, particles, sparks, camera, parallax effect, enemies, AI, combat, level-editing, level transitions, and making executables.
     </p>
-<div style="text-align:center;">
+<h6> Character and world </h6>
 <img src="Game_Screenshot_002.jpg">
-</div>
+<br>
+<h6> Dash Particles and hit sparks </h6>
 <img src="Game_Screenshot_001.jpg">
