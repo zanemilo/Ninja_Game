@@ -1,6 +1,6 @@
 # Ninja Game
 
-#### Author: Zane Deso
+<h1> Author: Zane Deso </h1>
 #### Last Updated: 8/31/2024
 
 
