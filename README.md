@@ -6,7 +6,19 @@
 
 <h3> Overview </h3>
     <p>
-    The purpose of this project was to complete daFluffyPotato pyGame Tutorial (2023) in 2024. Please see past commits to development history. This tutorial covered a many topics including tiles, tilemaps, physics, entities, particles, sparks, camera, parallax effect, enemies, AI, combat, level-editing, level transitions, and making executables.
+    The purpose of this project was to complete daFluffyPotato pyGame Tutorial (2023) in 2024. Please see past commits to review development history. This tutorial covered a many topics including tiles, tilemaps, physics, entities, particles, sparks, camera, parallax effect, enemies, AI, combat, level-editing, level transitions, and making executables.
+    </p>
+<br>
+
+<h3> Contributions </h3>
+    <p>
+        <ul>
+            <li> Custom smoke particle when player jumps from a tile.
+            <li> Added Double jump feature.
+            <li> Customized map, using tile editor. Saved and implemented using JSON.
+            <li> Adjusted camera smoothing to be less jittery.
+            <li> Adjusted wall jump velocity.
+        </ul>
     </p>
 <br>
 
