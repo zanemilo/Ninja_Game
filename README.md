@@ -10,5 +10,5 @@
     </p>
 <center>
 <img src="Game_Screenshot_002.jpg">
-<img src="Game_Screenshot_001.jpg">
 </center>
+<img src="Game_Screenshot_001.jpg">
