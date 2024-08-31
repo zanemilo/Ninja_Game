@@ -124,7 +124,5 @@ for spark in self.sparks.copy():
 <p>
 Each spark that is created is appended to a list in main and then is displayed via this code. The render function for the spark instance is called with parameters of the game's display and including the camera offset. Without the camera offset, the sparks would mis align with where they are meant to be due to the camera moving based on player movement this changes the coordinates needed to calculate location of sparks. Each spark is removed if their respective update method returns false when the sparks speed becomes 0. The way the sparks are removed are by using the remove() method on the list of sparks in main.
 </p>
-<br>
-<br>
 
     
