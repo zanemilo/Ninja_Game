@@ -8,6 +8,9 @@
     <p>
     The purpose of this project was to complete daFluffyPotato pyGame Tutorial (2023) in 2024. Please see past commits to review development history. This tutorial covered a many topics including tiles, tilemaps, physics, entities, particles, sparks, camera, parallax effect, enemies, AI, combat, level-editing, level transitions, and making executables.
     </p>
+    <a href="https://youtu.be/2gABYM5M0ww?list=PLX5fBCkxJmm1fPSqgn9gyR3qih8yYLvMj">
+    Link to Tutorial by DaFluffyPotato
+    </a>
 <br>
 
 <h3> Contributions </h3>
