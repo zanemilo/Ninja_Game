@@ -166,7 +166,7 @@ class Game:
                     if self.player.rect().collidepoint(projectile[0]): # collide with player
                         self.projectiles.remove(projectile)
                         self.dead += 1
-                        self.game.sfx['hit'].play()
+                        self.sfx['hit'].play()
                         self.screenshake = max(16, self.screenshake)
                         for i in range(30):
                             angle = random.random() * math.pi * 2
