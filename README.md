@@ -9,6 +9,13 @@
     The purpose of this project was to complete daFluffyPotato pyGame Tutorial (2023) in 2024. Please see past commits to development history. This tutorial covered a many topics including tiles, tilemaps, physics, entities, particles, sparks, camera, parallax effect, enemies, AI, combat, level-editing, level transitions, and making executables.
     </p>
 <br>
+
+<h3> How to play </h3>
+    <p>
+    To play Ninja Game, one should simply need to clone the repo to their local device and select the <strong>Ninja Game.exe Shortcut</strong>. Note: A slow load was noticeable on initial boot but afterwards the game runs smoothly.
+    </p>
+
+<br>
 <img src="Game_Screenshot_002.jpg">
 <h6> Character and world </h6>
 <br>
