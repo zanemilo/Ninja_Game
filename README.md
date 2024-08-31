@@ -24,8 +24,7 @@
     <p>
     The camera in the game follows the player's movement in a way that ramps to the player's location. Effectively this will create a smoother camera transition that gradually slows down as the camera location more closely aligns with the player's lcoation. The code below uses a constant of 24 as a means to divide the distance of the camera's location to the player's location each frame.
     </p>
-    ```
-        self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) /24
+    ``` self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) /24
         self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) /24
-        render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
-    ```
+        render_scroll = (int(self.scroll[0]), int(self.scroll[1])) ```
+    
