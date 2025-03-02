@@ -48,7 +48,6 @@ This project lays the groundwork for future improvements, including:
 ![Gameplay Screenshot 1](Game_Screenshot_002.jpg)  
 ![Gameplay Screenshot 2](Game_Screenshot_001.jpg)  
 
-*(Ensure that these images exist in a `screenshots/` folder within your repo to render correctly.)*
 
 ---
 
