@@ -15,7 +15,7 @@ from scripts.smoke import Smoke
 
 class Game:
     """ Game obj required for encapsulating game functions, attributes and variables. Thereby presenting cleaner code, following better practices, simplifying troubleshooting and more."""
-    def __init__(self) : 
+    def __init__(self): 
         pygame.init()
 
         pygame.display.set_caption("Ninja Game")  # Name of game, appears top lef tof window
